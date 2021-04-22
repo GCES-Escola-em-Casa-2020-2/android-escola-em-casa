@@ -55,7 +55,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SdStateCh
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+    private final OnTouchListener mDelayHideTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (AUTO_HIDE) {
@@ -85,7 +85,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SdStateCh
             if (actionBar != null) {
                 actionBar.show();
             }
-            mControlsView.setVisibility(View.VISIBLE);
+            mControlsView.setVisibility(VISIBLE);
         }
     };
 
@@ -105,7 +105,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SdStateCh
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-        mContentView.setOnClickListener(new View.OnClickListener() {
+        mContentView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggle();
@@ -153,7 +153,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SdStateCh
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
+        mControlsView.setVisibility(GONE);
         mVisible = false;
 
         MHIDE_HANDLER.removeCallbacks(mShowPart2Runnable);
