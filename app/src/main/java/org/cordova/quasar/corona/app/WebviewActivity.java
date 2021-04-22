@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -55,7 +54,7 @@ public class WebviewActivity extends AppCompatActivity {
     private WebView myWebView;
     private String url;
     private ProgressBar spinner;
-    String ShowOrHideWebViewInitialUse = "show";
+    private String ShowOrHideWebViewInitialUse = "show";
     private int PERMISSION_CODE = 1;
     private ValueCallback<Uri> mUploadMessage;
     private Uri mCapturedImageURI = null;
@@ -63,7 +62,7 @@ public class WebviewActivity extends AppCompatActivity {
     private String mCameraPhotoPath;
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     private static final int FILECHOOSER_RESULTCODE = 1;
-    FloatingActionButton fab;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -658,7 +657,7 @@ public class WebviewActivity extends AppCompatActivity {
             File file = new File(concatPathnameWithFileNameAndExtension);
             mCapturedImageURI = Uri.fromFile(file);
             
-            final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
             captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
 
