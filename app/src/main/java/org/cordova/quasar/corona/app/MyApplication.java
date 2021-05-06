@@ -11,8 +11,6 @@ import com.datami.smi.SmiResult;
 import com.datami.smi.SmiVpnSdk;
 import com.datami.smi.internal.MessagingType;
 
-import org.jetbrains.annotations.NotNull;
-
 public class MyApplication extends Application implements SdStateChangeListener {
     private static final String TAG = MainActivity.class.getName();
     public static SdState sdState;
@@ -27,7 +25,7 @@ public class MyApplication extends Application implements SdStateChangeListener 
     }
 
     @Override
-    public void onChange(@NotNull SmiResult currentSmiResult) {
+    public void onChange(SmiResult currentSmiResult) {
         sdState = currentSmiResult.getSdState();
         Log.d(TAG, "sponsored data state : " + sdState);
         typeOfAccess(sdState, currentSmiResult);

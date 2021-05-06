@@ -19,7 +19,7 @@ public class AboutActivity extends AppCompatActivity {
         int AboutActivityLayout = R.layout.activity_about;
         setContentView(AboutActivityLayout);
 
-        setupNavigationView();
+        setupNavigationView(R.id.about);
     }
 
     public void myOnClick(View view) {
@@ -46,23 +46,19 @@ public class AboutActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        BottomNavigationView navigationView = findViewById(R.id.navigation);
-        navigationView.getMenu().getItem(3).setChecked(true);
-    }
-
-    private void setupNavigationView() {
+    private void setupNavigationView(int viewId) {
         int navigationId = R.id.navigation;
         BottomNavigationView navigationView = findViewById(navigationId);
 
-        final int aboutId = R.id.about;
-        navigationView.setSelectedItemId(aboutId);
+        navigationView.setSelectedItemId(viewId);
 
         navigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     final int wikipediaId = R.id.wikipedia;
+                    final int questionsId = R.id.questions;
+                    final int classroomId = R.id.classroom;
+                    final int aboutId = R.id.about;
+
                     int selectedItemId = item.getItemId();
 
                     Context applicationContext = getApplicationContext();
@@ -70,25 +66,15 @@ public class AboutActivity extends AppCompatActivity {
                     Intent webviewActivityIntent = new Intent(applicationContext, WebviewActivity.class);
 
                     overridePendingTransition(0, 0);
-                    final int questionsId = R.id.questions;
-                    final int classroomId = R.id.classroom;
                     switch (selectedItemId) {
                         case classroomId: {
                             String classroomUrl = "https://classroom.google.com/a/estudante.se.df.gov.br";
-                            boolean isUrlEqualsClassroomUrl = url.equals(classroomUrl);
-                            if (isUrlEqualsClassroomUrl) {
-                                return true;
-                            }
                             Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", classroomUrl);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
                         case wikipediaId: {
                             String wikipediaUrl = "https://pt.wikipedia.org/";
-                            boolean isUrlEqualsWikipediaUrl = url.equals(wikipediaUrl);
-                            if (isUrlEqualsWikipediaUrl) {
-                                return true;
-                            }
                             Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", wikipediaUrl);
                             startActivity(activityWithUrlIntent);
                             return true;
@@ -108,5 +94,12 @@ public class AboutActivity extends AppCompatActivity {
                     return false;
                 }
         );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView navigationView = findViewById(R.id.navigation);
+        navigationView.getMenu().getItem(3).setChecked(true);
     }
 }

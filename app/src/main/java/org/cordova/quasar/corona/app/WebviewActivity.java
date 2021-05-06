@@ -2,7 +2,6 @@ package org.cordova.quasar.corona.app;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -73,7 +73,7 @@ public class WebviewActivity extends AppCompatActivity {
 
         checkCameraPermissions();
 
-        setupNavigationView();
+        setupNavigationView(R.id.classroom);
 
         setupProgressBar();
 
@@ -123,16 +123,19 @@ public class WebviewActivity extends AppCompatActivity {
         spinner = findViewById(progressBar1Id);
     }
 
-    private void setupNavigationView() {
+    private void setupNavigationView(int viewId) {
         int navigationId = R.id.navigation;
         BottomNavigationView navigationView = findViewById(navigationId);
 
-        final int classroomId = R.id.classroom;
-        navigationView.setSelectedItemId(classroomId);
+        navigationView.setSelectedItemId(viewId);
 
         navigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     final int wikipediaId = R.id.wikipedia;
+                    final int questionsId = R.id.questions;
+                    final int classroomId = R.id.classroom;
+                    final int aboutId = R.id.about;
+
                     int selectedItemId = item.getItemId();
 
                     Context applicationContext = getApplicationContext();
@@ -140,25 +143,15 @@ public class WebviewActivity extends AppCompatActivity {
                     Intent webviewActivityIntent = new Intent(applicationContext, WebviewActivity.class);
 
                     overridePendingTransition(0, 0);
-                    final int questionsId = R.id.questions;
-                    final int aboutId = R.id.about;
                     switch (selectedItemId) {
                         case classroomId: {
                             String classroomUrl = "https://classroom.google.com/a/estudante.se.df.gov.br";
-                            boolean isUrlEqualsClassroomUrl = url.equals(classroomUrl);
-                            if (isUrlEqualsClassroomUrl) {
-                                return true;
-                            }
                             Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", classroomUrl);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
                         case wikipediaId: {
                             String wikipediaUrl = "https://pt.wikipedia.org/";
-                            boolean isUrlEqualsWikipediaUrl = url.equals(wikipediaUrl);
-                            if (isUrlEqualsWikipediaUrl) {
-                                return true;
-                            }
                             Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", wikipediaUrl);
                             startActivity(activityWithUrlIntent);
                             return true;
