@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "org.cordova.quasar.corona.app"
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 9
         versionName "2.3"
         vectorDrawables.useSupportLibrary = true
