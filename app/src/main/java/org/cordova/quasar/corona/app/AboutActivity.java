@@ -9,6 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static org.cordova.quasar.corona.app.Constants.*;
+import static org.cordova.quasar.corona.app.Constants.ESCOLA_EM_CASA;
+import static org.cordova.quasar.corona.app.Constants.WIKIPEDIA_PT;
+import static org.cordova.quasar.corona.app.UrlsEnum.*;
+
 public class AboutActivity extends AppCompatActivity {
     private String url;
 
@@ -28,18 +33,17 @@ public class AboutActivity extends AppCompatActivity {
         switch (link) {
             case "escola_em_casa_btn":
                 startActivity(new Intent(getApplicationContext(), WebviewActivity.class)
-                        .putExtra("url", "https://escolaemcasa.se.df.gov.br/"));
+                        .putExtra("url", ESCOLA_EM_CASA));
                 overridePendingTransition(0, 0);
                 break;
             case "como_acessar_btn":
                 startActivity(new Intent(getApplicationContext(), WebviewActivity.class)
-                        .putExtra("url",
-                                "https://escolaemcasa.se.df.gov.br/index.php/como-acessar/"));
+                        .putExtra("url", COMO_ACESSAR));
                 overridePendingTransition(0, 0);
                 break;
             case "secretaria_site_btn":
                 startActivity(new Intent(getApplicationContext(), WebviewActivity.class)
-                        .putExtra("url", "http://www.se.df.gov.br/"));
+                        .putExtra("url", SECRETARIA_SITE.getUrl()));
                 overridePendingTransition(0, 0);
                 break;
         }
@@ -68,14 +72,12 @@ public class AboutActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                     switch (selectedItemId) {
                         case classroomId: {
-                            String classroomUrl = "https://classroom.google.com/a/estudante.se.df.gov.br";
-                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", classroomUrl);
+                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", CLASS_ROOM_ESTUDANTE);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
                         case wikipediaId: {
-                            String wikipediaUrl = "https://pt.wikipedia.org/";
-                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", wikipediaUrl);
+                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", WIKIPEDIA_PT);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
