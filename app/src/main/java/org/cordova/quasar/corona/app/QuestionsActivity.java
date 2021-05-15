@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static org.cordova.quasar.corona.app.Constants.CLASS_ROOM_ESTUDANTE;
+import static org.cordova.quasar.corona.app.Constants.WIKIPEDIA_PT;
+
 public class QuestionsActivity extends AppCompatActivity {
     private String url;
 
@@ -43,14 +46,12 @@ public class QuestionsActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                     switch (selectedItemId) {
                         case classroomId: {
-                            String classroomUrl = "https://classroom.google.com/a/estudante.se.df.gov.br";
-                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", classroomUrl);
+                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", CLASS_ROOM_ESTUDANTE);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
                         case wikipediaId: {
-                            String wikipediaUrl = "https://pt.wikipedia.org/";
-                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", wikipediaUrl);
+                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", WIKIPEDIA_PT);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
