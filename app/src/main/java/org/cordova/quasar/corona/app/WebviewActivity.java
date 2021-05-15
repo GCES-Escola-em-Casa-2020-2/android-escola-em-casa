@@ -50,6 +50,10 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.cordova.quasar.corona.app.Constants.CLASS_ROOM_ESTUDANTE;
+import static org.cordova.quasar.corona.app.Constants.WIKIPEDIA_PT;
+import static org.cordova.quasar.corona.app.UrlsEnum.SECRETARIA_SITE;
+
 public class WebviewActivity extends AppCompatActivity {
     private WebView myWebView;
     private String url;
@@ -145,14 +149,12 @@ public class WebviewActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                     switch (selectedItemId) {
                         case classroomId: {
-                            String classroomUrl = "https://classroom.google.com/a/estudante.se.df.gov.br";
-                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", classroomUrl);
+                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", CLASS_ROOM_ESTUDANTE);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
                         case wikipediaId: {
-                            String wikipediaUrl = "https://pt.wikipedia.org/";
-                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", wikipediaUrl);
+                            Intent activityWithUrlIntent = webviewActivityIntent.putExtra("url", WIKIPEDIA_PT);
                             startActivity(activityWithUrlIntent);
                             return true;
                         }
@@ -296,16 +298,13 @@ public class WebviewActivity extends AppCompatActivity {
 
         BottomNavigationView navigationView = findViewById(R.id.navigation);
 
-        final String classroomUrl = "https://classroom.google.com/a/estudante.se.df.gov.br";
-        final String wikipediaUrl = "https://pt.wikipedia.org/";
-
         switch (url) {
-            case classroomUrl: {
+            case CLASS_ROOM_ESTUDANTE: {
                 int classroomId = 0;
                 navigationView.getMenu().getItem(classroomId).setChecked(true);
                 break;
             }
-            case wikipediaUrl: {
+            case WIKIPEDIA_PT: {
                 int wikipediaId = 1;
                 navigationView.getMenu().getItem(wikipediaId).setChecked(true);
                 break;
@@ -334,7 +333,7 @@ public class WebviewActivity extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView webview, String url, Bitmap favicon) {
             boolean isThisFirstUse = isFirstUse();
-            boolean isSeDfGovUrl = url.equals("http://www.se.df.gov.br/");
+            boolean isSeDfGovUrl = url.equals(SECRETARIA_SITE.getUrl());
             boolean isUrlDifferentThanGovUrl = !isSeDfGovUrl;
             boolean isFirstUseAndDifferentUrlThanGovUrl = isThisFirstUse && isUrlDifferentThanGovUrl;
             if (isFirstUseAndDifferentUrlThanGovUrl) {
@@ -479,46 +478,12 @@ public class WebviewActivity extends AppCompatActivity {
                     boolean isSdAvailable = MyApplication.sdState == SdState.SD_AVAILABLE;
                     if (isSdAvailable) {
                         URL urlEntrada = null;
-                        List<String> urlsPermitidas = new ArrayList<String>(25);
 
                         urlEntrada = new URL(url);
 
-                        urlsPermitidas.add("se.df.gov.br");
-                        urlsPermitidas.add("escolaemcasa.se.df.gov.br");
-                        urlsPermitidas.add("pt.wikipedia.org");
-                        urlsPermitidas.add("en.wikipedia.org");
-                        urlsPermitidas.add("wikipedia.org");
-                        urlsPermitidas.add("classroom.google.com");
-                        urlsPermitidas.add("accounts.google.com");
-                        urlsPermitidas.add("googledrive.com");
-                        urlsPermitidas.add("drive.google.com");
-                        urlsPermitidas.add("docs.google.com");
-                        urlsPermitidas.add("c.docs.google.com");
-                        urlsPermitidas.add("sheets.google.com");
-                        urlsPermitidas.add("slides.google.com");
-                        urlsPermitidas.add("takeout.google.com");
-                        urlsPermitidas.add("gg.google.com");
-                        urlsPermitidas.add("script.google.com");
-                        urlsPermitidas.add("ssl.google-analytics.com");
-                        urlsPermitidas.add("video.google.com");
-                        urlsPermitidas.add("s.ytimg.com");
-                        urlsPermitidas.add("apis.google.com");
-                        urlsPermitidas.add("googleapis.com");
-                        urlsPermitidas.add("googleusercontent.com");
-                        urlsPermitidas.add("gstatic.com");
-                        urlsPermitidas.add("gvt1.com");
-                        urlsPermitidas.add("edu.google.com");
-                        urlsPermitidas.add("accounts.youtube.com");
-                        urlsPermitidas.add("myaccount.google.com");
-                        urlsPermitidas.add("forms.gle");
-                        urlsPermitidas.add("google.com");
-
                         //TODO: fazer um filtro inteligente de URLs
-                        for (int i = 0; i <= urlsPermitidas.size() - 1; i++) {
-                            boolean isUrlAllowed = urlEntrada.getAuthority().contains(urlsPermitidas.get(i));
-                            if (isUrlAllowed) {
-                                return false;
-                            }
+                        if (UrlsEnum.allowed(urlEntrada.getAuthority())) {
+                            return false;
                         }
 
                         Log.d("ControleAcesso", "Acesso negado a " + url);
